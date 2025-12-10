@@ -129,8 +129,8 @@ function renderProjects(projects) {
                         // determine current index (match by filename)
                         let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
                         if (startIndex === -1) startIndex = 0;
-                        // pass title, link and description for richer caption
-                        openLightbox(imgs, startIndex, project.title || 'Project', project.link || '', project.description || '');
+                                // pass title, link, description and short caption for richer caption
+                                openLightbox(imgs, startIndex, project.title || 'Project', project.link || '', project.description || '', project.caption || '');
                     });
                 }
         }
@@ -226,14 +226,16 @@ function createLightboxIfNeeded() {
     });
 }
 
-let _lightboxState = { images: [], index: 0, title: '', link: '', description: '' };
-function openLightbox(images, startIndex = 0, title = '', link = '', description = '') {
+let _lightboxState = { images: [], index: 0, title: '', link: '', description: '', caption: '' };
+function openLightbox(images, startIndex = 0, title = '', link = '', description = '', caption = '') {
     createLightboxIfNeeded();
     _lightboxState.images = images.slice();
     _lightboxState.index = Math.max(0, Math.min(startIndex, images.length - 1));
     _lightboxState.title = title || '';
     _lightboxState.link = link || '';
     _lightboxState.description = description || '';
+    // allow a short caption to be preferred (projects.json can include `caption`)
+    _lightboxState.caption = caption || '';
     const overlay = document.querySelector('.lightbox-overlay');
     const imgEl = overlay.querySelector('.lightbox-img');
     const loader = overlay.querySelector('.lightbox-loader');
@@ -254,13 +256,15 @@ function openLightbox(images, startIndex = 0, title = '', link = '', description
     tmp.onload = () => {
         imgEl.src = target;
         imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
-        // richer caption: title + index + optional link and short description
-        const titleText = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        // richer caption: title + Screenshot index + optional link and short description
+        const titleText = `${_lightboxState.title} — Screenshot ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
         let linkHTML = '';
         if (_lightboxState.link) {
             linkHTML = `<div class="lightbox-link"><a href="${_lightboxState.link}" target="_blank" rel="noopener noreferrer">View Project</a></div>`;
         }
-        const desc = _lightboxState.description ? `<div class="lightbox-desc">${_lightboxState.description}</div>` : '';
+        // use provided short caption if available, otherwise use truncated description
+        const chosen = _lightboxState.caption || (_lightboxState.description ? truncate(_lightboxState.description, 160) : '');
+        const desc = chosen ? `<div class="lightbox-desc">${escapeHtml(chosen)}</div>` : '';
         caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
@@ -301,12 +305,13 @@ function navigateLightbox(dir) {
     tmp.onload = () => {
         imgEl.src = target;
         imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
-        const titleText = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        const titleText = `${_lightboxState.title} — Screenshot ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
         let linkHTML = '';
         if (_lightboxState.link) {
             linkHTML = `<div class="lightbox-link"><a href="${_lightboxState.link}" target="_blank" rel="noopener noreferrer">View Project</a></div>`;
         }
-        const desc = _lightboxState.description ? `<div class="lightbox-desc">${_lightboxState.description}</div>` : '';
+        const chosen = _lightboxState.caption || (_lightboxState.description ? truncate(_lightboxState.description, 160) : '');
+        const desc = chosen ? `<div class="lightbox-desc">${escapeHtml(chosen)}</div>` : '';
         caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
@@ -447,4 +452,11 @@ function escapeHtml(str) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
+}
+
+// Small helper to truncate long descriptions
+function truncate(str, maxLen) {
+    if (!str) return '';
+    if (str.length <= maxLen) return str;
+    return str.slice(0, maxLen - 1).trim() + '…';
 }
