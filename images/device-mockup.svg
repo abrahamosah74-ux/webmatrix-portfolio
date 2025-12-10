@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Device mockup">
+  <defs>
+    <linearGradient id="glassGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.05"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Device outer frame -->
+  <rect x="30" y="20" rx="20" ry="20" width="340" height="260" fill="#111" />
+
+  <!-- Screen area with dark blue background -->
+  <rect x="50" y="40" rx="12" ry="12" width="300" height="220" fill="#082147" filter="url(#shadow)" />
+
+  <!-- Subtle glass highlight -->
+  <rect x="50" y="40" rx="12" ry="12" width="300" height="220" fill="url(#glassGrad)" />
+
+  <!-- Small speaker / camera details -->
+  <rect x="185" y="28" width="30" height="4" rx="2" fill="#222" />
+  <circle cx="110" cy="52" r="3" fill="#222" />
+
+  <!-- Outline stroke for device -->
+  <rect x="30" y="20" rx="20" ry="20" width="340" height="260" fill="none" stroke="#222" stroke-width="2" />
+
+</svg>
