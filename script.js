@@ -121,6 +121,17 @@ function renderProjects(projects) {
                     if (main && t.dataset && t.dataset.src) main.src = t.dataset.src;
                 });
             });
+            // Clicking main image opens lightbox viewer
+            if (main) {
+                main.style.cursor = 'zoom-in';
+                main.addEventListener('click', () => {
+                    const imgs = project.images.slice();
+                    // determine current index (match by filename)
+                    let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
+                    if (startIndex === -1) startIndex = 0;
+                    openLightbox(imgs, startIndex);
+                });
+            }
         }
 
         // Staggered animation
@@ -129,6 +140,63 @@ function renderProjects(projects) {
             projectDiv.style.transform = 'translateY(0)';
         }, index * 200);
     });
+}
+
+/* Lightbox - simple fullscreen image viewer */
+function createLightboxIfNeeded() {
+    if (document.querySelector('.lightbox-overlay')) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = `
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close">✕</button>
+            <button class="lightbox-prev" aria-label="Previous">◀</button>
+            <img class="lightbox-img" src="" alt="">
+            <button class="lightbox-next" aria-label="Next">▶</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // handlers
+    overlay.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+    overlay.querySelector('.lightbox-next').addEventListener('click', () => navigateLightbox(1));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeLightbox(); });
+    window.addEventListener('keydown', (e) => {
+        const ol = document.querySelector('.lightbox-overlay');
+        if (!ol || !ol.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+        if (e.key === 'ArrowRight') navigateLightbox(1);
+    });
+}
+
+let _lightboxState = { images: [], index: 0 };
+function openLightbox(images, startIndex = 0) {
+    createLightboxIfNeeded();
+    _lightboxState.images = images.slice();
+    _lightboxState.index = Math.max(0, Math.min(startIndex, images.length - 1));
+    const overlay = document.querySelector('.lightbox-overlay');
+    const imgEl = overlay.querySelector('.lightbox-img');
+    imgEl.src = _lightboxState.images[_lightboxState.index];
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const overlay = document.querySelector('.lightbox-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function navigateLightbox(dir) {
+    if (!_lightboxState.images.length) return;
+    _lightboxState.index = (_lightboxState.index + dir + _lightboxState.images.length) % _lightboxState.images.length;
+    const overlay = document.querySelector('.lightbox-overlay');
+    if (!overlay) return;
+    const imgEl = overlay.querySelector('.lightbox-img');
+    imgEl.src = _lightboxState.images[_lightboxState.index];
 }
 
 fetch('projects.json')
