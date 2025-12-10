@@ -2,15 +2,16 @@
    ROOT VARIABLES & RESETS
    ============================================ */
 :root {
-    --primary-color: #0a74da;
-    --primary-dark: #0553a8;
-    --secondary-color: #00d4ff;
-    --accent-color: #ff6b6b;
-    --dark-bg: #0f1419;
-    --light-bg: #1a5744;
-    --text-dark: #1a202c;
-    --text-light: #718096;
-    --border-color: #e2e8f0;
+    /* Premium color palette */
+    --primary-color: #0B3D91; /* deep royal blue */
+    --primary-dark: #082A63; /* darker navy */
+    --secondary-color: #CBA135; /* warm gold accent */
+    --accent-color: #7FD3C7; /* soft teal */
+    --dark-bg: #071229; /* near-black navy for footers/overlays */
+    --light-bg: #0F2340; /* deep navy for sections */
+    --text-dark: #0F1724; /* almost-black text */
+    --text-light: #9CA3AF; /* muted gray */
+    --border-color: rgba(15, 23, 36, 0.06);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
@@ -29,7 +30,7 @@ body {
         sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
-    background: #fff;
+    background: linear-gradient(180deg, #f7f8fb 0%, #fbfbfd 100%);
     overflow-x: hidden;
 }
 
@@ -49,10 +50,9 @@ html {
 .navbar {
     position: sticky;
     top: 0;
-    background: #240217;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(90deg, rgba(7,18,41,0.9), rgba(11,61,145,0.95));
+    box-shadow: 0 2px 12px rgba(2, 6, 23, 0.45);
     z-index: 100;
-}
 
 .nav-content {
     display: flex;
@@ -107,7 +107,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(32, 53, 73, 0.8) 0%, rgba(45, 85, 146, 0.8) 100%), url('images/hero-backgrounds/hero-bg.png');
+    background: linear-gradient(135deg, rgba(7,18,41,0.85) 0%, rgba(8,42,99,0.85) 100%), url('images/hero-backgrounds/hero-bg.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -131,7 +131,7 @@ html {
 .hero-title {
     font-size: clamp(2.4rem, 7vw, 3.8rem);
     font-weight: 800;
-    color: var(--text-dark);
+    color: #ffffff;
     margin-bottom: 1.2rem;
     line-height: 1.15;
     letter-spacing: -0.5px;
@@ -139,7 +139,7 @@ html {
 
 .hero-subtitle {
     font-size: clamp(1rem, 2.2vw, 1.25rem);
-    color: var(--text-light);
+    color: rgba(255,255,255,0.85);
     margin-bottom: 2rem;
     line-height: 1.75;
     max-width: 700px;
@@ -169,7 +169,7 @@ html {
     height: auto;
     border-radius: 12px;
     box-shadow: 0 25px 60px rgba(10, 116, 218, 0.15);
-    background: white;
+    background: linear-gradient(180deg, var(--light-bg), var(--primary-dark));
     display: block;
 }
 
@@ -190,12 +190,12 @@ html {
 }
 
 .shape-1 {
-    width: 400px;
-    height: 400px;
-    background: var(--primary-color);
+    width: 420px;
+    height: 420px;
+    background: linear-gradient(135deg, rgba(11,61,145,0.9), rgba(8,42,99,0.9));
     border-radius: 50%;
-    top: -50px;
-    right: -100px;
+    top: -60px;
+    right: -120px;
     animation: float 6s ease-in-out infinite;
 }
 
@@ -239,26 +239,26 @@ html {
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
     color: white;
-    box-shadow: 0 4px 15px rgba(10, 116, 218, 0.3);
+    box-shadow: 0 8px 30px rgba(11,61,145,0.28);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
+    background: linear-gradient(90deg, var(--primary-dark), var(--secondary-color));
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(10, 116, 218, 0.4);
+    box-shadow: 0 10px 35px rgba(8,42,99,0.32);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    border: 2px solid rgba(203,161,53,0.95);
 }
 
 .btn-secondary:hover {
-    background: var(--primary-color);
-    color: white;
+    background: rgba(203,161,53,0.12);
+    color: var(--secondary-color);
     transform: translateY(-2px);
 }
 
@@ -267,7 +267,7 @@ html {
    ============================================ */
 .projects {
     padding: 5rem 0;
-    background: var(--light-bg);
+    background: linear-gradient(180deg, #f7f8fb 0%, #f3f6fa 100%);
 }
 
 .section-header {
@@ -296,10 +296,10 @@ html {
     display: flex;
     gap: 2rem;
     align-items: center;
-    background: white;
+    background: #ffffff;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 30px rgba(11,35,70,0.06);
     transition: var(--transition);
     opacity: 0;
     transform: translateY(30px);
@@ -381,12 +381,12 @@ html {
 }
 
 .service-card {
-    background: var(--light-bg);
+    background: #ffffff;
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
     transition: var(--transition);
-    border: 2px solid transparent;
+    border: 1px solid rgba(11,35,70,0.04);
 }
 
 .service-card:hover {
@@ -416,7 +416,7 @@ html {
    ============================================ */
 .about {
     padding: 5rem 0;
-    background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2332 100%);
+    background: linear-gradient(135deg, var(--dark-bg) 0%, #0b1f33 100%);
     color: white;
 }
 
@@ -445,14 +445,14 @@ html {
 
 .badge {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(11,35,70,0.08);
+    border: 1px solid rgba(11,35,70,0.06);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
 }
 
 /* ============================================
@@ -460,7 +460,7 @@ html {
    ============================================ */
 .contact {
     padding: 5rem 0;
-    background: var(--light-bg);
+    background: linear-gradient(180deg, #f7f8fb 0%, #f6f9fc 100%);
 }
 
 .contact-content {
@@ -496,15 +496,15 @@ html {
 .contact-form textarea:focus,
 .contact-form select:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(10, 116, 218, 0.1);
+    border-color: rgba(11,61,145,0.9);
+    box-shadow: 0 0 0 4px rgba(11,61,145,0.08);
 }
 
 .contact-info {
-    background: white;
+    background: #ffffff;
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 30px rgba(11,35,70,0.06);
 }
 
 .contact-info h3 {
@@ -585,17 +585,20 @@ html {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
     padding: 1rem 1.5rem;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 18px 40px rgba(11,35,70,0.18);
     transition: var(--transition);
     z-index: 999;
     font-size: 1rem;
 }
+.floating-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(8,42,99,0.22);
 
 .floating-btn:hover {
     transform: translateY(-5px) scale(1.1);
