@@ -129,7 +129,7 @@ function renderProjects(projects) {
                     // determine current index (match by filename)
                     let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
                     if (startIndex === -1) startIndex = 0;
-                    openLightbox(imgs, startIndex);
+                    openLightbox(imgs, startIndex, project.title || 'Project');
                 });
             }
         }
@@ -151,8 +151,12 @@ function createLightboxIfNeeded() {
         <div class="lightbox-content">
             <button class="lightbox-close" aria-label="Close">✕</button>
             <button class="lightbox-prev" aria-label="Previous">◀</button>
-            <img class="lightbox-img" src="" alt="">
+            <div class="lightbox-zoom">
+                <div class="lightbox-loader" aria-hidden="true"></div>
+                <img class="lightbox-img" src="" alt="">
+            </div>
             <button class="lightbox-next" aria-label="Next">▶</button>
+            <div class="lightbox-caption" aria-live="polite"></div>
         </div>
     `;
     document.body.appendChild(overlay);
@@ -169,18 +173,98 @@ function createLightboxIfNeeded() {
         if (e.key === 'ArrowLeft') navigateLightbox(-1);
         if (e.key === 'ArrowRight') navigateLightbox(1);
     });
+
+    // touch gestures state
+    let touchState = { startX: 0, startY: 0, startDist: 0, zoom: 1, lastZoom: 1 };
+    const zoomContainer = overlay.querySelector('.lightbox-zoom');
+    const imgEl = overlay.querySelector('.lightbox-img');
+
+    function getDistance(touches) {
+        const [a, b] = touches; return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    }
+
+    overlay.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            touchState.startX = e.touches[0].clientX;
+            touchState.startY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+            touchState.startDist = getDistance(e.touches);
+            touchState.lastZoom = touchState.zoom || 1;
+        }
+    }, { passive: true });
+
+    overlay.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) return; // avoid scrolling on single touch
+        if (e.touches.length === 2) {
+            e.preventDefault();
+            const dist = getDistance(e.touches);
+            let newZoom = (dist / touchState.startDist) * touchState.lastZoom;
+            newZoom = Math.max(1, Math.min(newZoom, 4));
+            touchState.zoom = newZoom;
+            zoomContainer.style.transform = `scale(${newZoom})`;
+        }
+    }, { passive: false });
+
+    overlay.addEventListener('touchend', (e) => {
+        if ((touchState.zoom || 1) <= 1) {
+            // detect swipe
+            if (e.changedTouches && e.changedTouches.length === 1) {
+                const dx = e.changedTouches[0].clientX - touchState.startX;
+                const dy = e.changedTouches[0].clientY - touchState.startY;
+                if (Math.abs(dx) > 50 && Math.abs(dy) < 100) {
+                    if (dx < 0) navigateLightbox(1); else navigateLightbox(-1);
+                }
+            }
+        }
+        // reset zoom if it returned to ~1
+        if (touchState.zoom && touchState.zoom <= 1.05) {
+            touchState.zoom = 1; zoomContainer.style.transform = 'scale(1)'; touchState.lastZoom = 1;
+        } else if (touchState.zoom) {
+            touchState.lastZoom = touchState.zoom;
+        }
+    });
 }
 
-let _lightboxState = { images: [], index: 0 };
-function openLightbox(images, startIndex = 0) {
+let _lightboxState = { images: [], index: 0, title: '' };
+function openLightbox(images, startIndex = 0, title = '') {
     createLightboxIfNeeded();
     _lightboxState.images = images.slice();
     _lightboxState.index = Math.max(0, Math.min(startIndex, images.length - 1));
+    _lightboxState.title = title || '';
     const overlay = document.querySelector('.lightbox-overlay');
     const imgEl = overlay.querySelector('.lightbox-img');
-    imgEl.src = _lightboxState.images[_lightboxState.index];
+    const loader = overlay.querySelector('.lightbox-loader');
+    const caption = overlay.querySelector('.lightbox-caption');
+
+    // Show loader while high-res loads
+    loader.style.display = 'block';
+    imgEl.style.opacity = '0';
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+
+    // If a high-res array is provided, use it; otherwise use same images
+    const hiResImages = _lightboxState.imagesHiRes || _lightboxState.images;
+    const target = hiResImages && hiResImages[_lightboxState.index] ? hiResImages[_lightboxState.index] : _lightboxState.images[_lightboxState.index];
+
+    // preload
+    const tmp = new Image();
+    tmp.onload = () => {
+        imgEl.src = target;
+        imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
+        caption.textContent = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        loader.style.display = 'none';
+        imgEl.style.opacity = '1';
+        // reset zoom container
+        const zoomContainer = overlay.querySelector('.lightbox-zoom');
+        if (zoomContainer) { zoomContainer.style.transform = 'scale(1)'; }
+    };
+    tmp.onerror = () => {
+        // fallback directly
+        imgEl.src = _lightboxState.images[_lightboxState.index];
+        loader.style.display = 'none';
+        imgEl.style.opacity = '1';
+    };
+    tmp.src = target;
 }
 
 function closeLightbox() {
@@ -196,7 +280,28 @@ function navigateLightbox(dir) {
     const overlay = document.querySelector('.lightbox-overlay');
     if (!overlay) return;
     const imgEl = overlay.querySelector('.lightbox-img');
-    imgEl.src = _lightboxState.images[_lightboxState.index];
+    const loader = overlay.querySelector('.lightbox-loader');
+    const caption = overlay.querySelector('.lightbox-caption');
+    // show loader while switching
+    loader.style.display = 'block';
+    imgEl.style.opacity = '0';
+    const hiResImages = _lightboxState.imagesHiRes || _lightboxState.images;
+    const target = hiResImages && hiResImages[_lightboxState.index] ? hiResImages[_lightboxState.index] : _lightboxState.images[_lightboxState.index];
+    const tmp = new Image();
+    tmp.onload = () => {
+        imgEl.src = target;
+        imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
+        caption.textContent = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        loader.style.display = 'none';
+        imgEl.style.opacity = '1';
+        const zoomContainer = overlay.querySelector('.lightbox-zoom'); if (zoomContainer) zoomContainer.style.transform = 'scale(1)';
+    };
+    tmp.onerror = () => {
+        imgEl.src = _lightboxState.images[_lightboxState.index];
+        loader.style.display = 'none';
+        imgEl.style.opacity = '1';
+    };
+    tmp.src = target;
 }
 
 fetch('projects.json')
