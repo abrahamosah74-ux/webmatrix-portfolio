@@ -1,0 +1,53 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive Web Application preview">
+  <defs>
+    <linearGradient id="appBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#appBg)" />
+
+  <!-- Browser Window -->
+  <rect x="40" y="30" width="520" height="340" rx="12" fill="white" />
+  
+  <!-- Title Bar -->
+  <rect x="40" y="30" width="520" height="40" rx="12 12 0 0" fill="#1e293b" />
+  <circle cx="65" cy="50" r="4" fill="#ec4899" />
+  <circle cx="80" cy="50" r="4" fill="#f59e0b" />
+  <circle cx="95" cy="50" r="4" fill="#14b8a6" />
+  <text x="200" y="55" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">webapp.example.com</text>
+
+  <!-- Content Area -->
+  <rect x="50" y="80" width="500" height="280" fill="white" />
+
+  <!-- Header Section -->
+  <rect x="60" y="90" width="480" height="50" fill="rgba(102, 126, 234, 0.1)" rx="8" />
+  <text x="300" y="125" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#0f172a" text-anchor="middle">Interactive Experience</text>
+
+  <!-- Feature Cards -->
+  <g>
+    <!-- Card 1 -->
+    <rect x="60" y="160" width="140" height="100" rx="8" fill="rgba(99, 102, 241, 0.15)" stroke="rgba(99, 102, 241, 0.3)" stroke-width="1" />
+    <text x="130" y="185" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">Responsive</text>
+    <text x="130" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Mobile & Desktop</text>
+    <text x="130" y="230" font-family="Arial, sans-serif" font-size="14" fill="#6366f1" text-anchor="middle">✓</text>
+
+    <!-- Card 2 -->
+    <rect x="230" y="160" width="140" height="100" rx="8" fill="rgba(236, 72, 153, 0.15)" stroke="rgba(236, 72, 153, 0.3)" stroke-width="1" />
+    <text x="300" y="185" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">Animated</text>
+    <text x="300" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">Smooth Transitions</text>
+    <text x="300" y="230" font-family="Arial, sans-serif" font-size="14" fill="#ec4899" text-anchor="middle">✓</text>
+
+    <!-- Card 3 -->
+    <rect x="400" y="160" width="140" height="100" rx="8" fill="rgba(20, 184, 166, 0.15)" stroke="rgba(20, 184, 166, 0.3)" stroke-width="1" />
+    <text x="470" y="185" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">Fast</text>
+    <text x="470" y="210" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">95+ Lighthouse</text>
+    <text x="470" y="230" font-family="Arial, sans-serif" font-size="14" fill="#14b8a6" text-anchor="middle">✓</text>
+  </g>
+
+  <!-- CTA Button -->
+  <rect x="200" y="300" width="200" height="40" rx="20" fill="#6366f1" />
+  <text x="300" y="325" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Explore More</text>
+</svg>
