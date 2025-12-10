@@ -6,9 +6,10 @@
         "link": "https://example-web-app.netlify.app"
     },
     {
-        "title": "Car Dealership — Navy Theme",
+        "title": "Car Dealership",
         "description": "A modern car-dealership demo site with inventory listings, search filters, and a responsive UI. Built as a showcase project demonstrating responsive layouts, accessible forms, and performance optimizations.",
         "image": "images/car-dealership.png",
-        "link": "https://car-dealership-navy.vercel.app/"
+        "link": "https://car-dealership-navy.vercel.app/",
+        "theme": "navy"
     }
 ]

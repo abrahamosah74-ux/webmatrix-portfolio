@@ -65,11 +65,17 @@ function renderProjects(projects) {
             <img src="${project.image}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">
             <div class="project-info">
                 <h3>${project.title}</h3>
+                ${project.theme ? `<span class="project-theme">${project.theme}</span>` : ''}
                 <p>${project.description}</p>
                 <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Live Project</a>
             </div>
         `;
         container.appendChild(projectDiv);
+
+        // Apply theme styling if theme property exists
+        if (project.theme === 'navy') {
+            projectDiv.classList.add('project-navy');
+        }
 
         // Accessibility: mark as article and make keyboard-focusable
         projectDiv.setAttribute('role', 'article');

@@ -372,6 +372,46 @@ html {
     border-color: rgba(99, 102, 241, 0.2);
 }
 
+.project-navy {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-color: rgba(15, 23, 36, 0.3);
+}
+
+.project-navy .project-info {
+    color: white;
+}
+
+.project-navy .project-info h3 {
+    color: white;
+}
+
+.project-navy .project-info p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.project-navy .project-info a {
+    color: #6366f1;
+    border-color: #6366f1;
+}
+
+.project-navy .project-info a:hover {
+    background: #6366f1;
+    color: white;
+}
+
+.project-theme {
+    display: inline-block;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #64748b;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
 .project img {
     flex: 0 0 40%;
     height: 300px;
