@@ -62,8 +62,26 @@ function renderProjects(projects) {
         const projectDiv = document.createElement('div');
         projectDiv.classList.add('project');
 
+        // Build gallery HTML if project.images (array) exists, otherwise single image
+        let mediaHTML = '';
+        if (Array.isArray(project.images) && project.images.length) {
+            const thumbs = project.images.map((img, i) => `
+                    <img class="thumb" src="${img}" alt="${project.title} screenshot ${i+1}" loading="lazy" data-src="${img}">
+                `).join('');
+
+            mediaHTML = `
+                <div class="project-gallery">
+                    <img class="project-main" src="${project.images[0]}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">
+                    <div class="project-thumbs">${thumbs}</div>
+                </div>
+            `;
+        } else {
+            const src = project.image || 'images/car-dealership.png';
+            mediaHTML = `<img src="${src}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">`;
+        }
+
         projectDiv.innerHTML = `
-            <img src="${project.image}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">
+            ${mediaHTML}
             <div class="project-info">
                 <h3>${project.title}</h3>
                 ${project.theme ? `<span class="project-theme">${project.theme}</span>` : ''}
@@ -71,6 +89,7 @@ function renderProjects(projects) {
                 <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Live Project</a>
             </div>
         `;
+
         container.appendChild(projectDiv);
 
         // Apply theme styling if theme property exists
@@ -92,6 +111,17 @@ function renderProjects(projects) {
                 }
             }
         });
+
+        // Thumbnail click behavior (swap main image)
+        if (Array.isArray(project.images) && project.images.length) {
+            const main = projectDiv.querySelector('.project-main');
+            const thumbs = projectDiv.querySelectorAll('.project-thumbs .thumb');
+            thumbs.forEach(t => {
+                t.addEventListener('click', () => {
+                    if (main && t.dataset && t.dataset.src) main.src = t.dataset.src;
+                });
+            });
+        }
 
         // Staggered animation
         setTimeout(() => {
