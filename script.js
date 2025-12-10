@@ -38,16 +38,17 @@ document.querySelectorAll('.service-card, .about').forEach(el => {
 // Load projects from JSON with staggered animations
 const fallbackProjects = [
     {
-        "title": "Car Dealership Website",
-        "description": "A complete e-commerce solution for automotive sales. Features include vehicle listings with advanced search filters, inventory management, customer inquiry system, and mobile-responsive design. Built with HTML5, CSS3, JavaScript, and Python backend. Helped increase online inquiries by 150%.",
+        "title": "Car Dealership",
+        "description": "A modern car-dealership demo site with inventory listings, search filters, and a responsive UI. Built as a showcase project demonstrating responsive layouts, accessible forms, and performance optimizations.",
         "image": "images/car-dealership.png",
-        "link": "https://example-car-dealership.netlify.app"
+        "link": "https://car-dealership-navy.vercel.app/",
+        "theme": "navy"
     },
     {
         "title": "Interactive Web Application",
         "description": "A modern, feature-rich web application showcasing best practices in responsive design and user interaction. Includes smooth animations, optimized performance, and accessibility compliance. Perfect example of interactive UI design with vanilla JavaScript. Achieves 95+ Lighthouse score.",
         "image": "images/small-project.png",
-        "link": "https://example-web-app.netlify.app"
+        "link": "https://realestate-preview.vercel.app/"
     }
 ];
 

@@ -3,7 +3,7 @@
         "title": "Interactive Web Application",
         "description": "A modern, feature-rich web application showcasing best practices in responsive design and user interaction. Includes smooth animations, optimized performance, and accessibility compliance. Perfect example of interactive UI design with vanilla JavaScript. Achieves 95+ Lighthouse score.",
         "image": "images/small-project.png",
-        "link": "https://example-web-app.netlify.app"
+        "link": "https://realestate-preview.vercel.app/"
     },
     {
         "title": "Car Dealership",
