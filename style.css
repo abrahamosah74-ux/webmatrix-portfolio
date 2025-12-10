@@ -243,6 +243,31 @@ html {
     color: white;
     box-shadow: 0 8px 30px rgba(11,61,145,0.28);
 }
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+.btn-primary::after {
+    /* subtle moving shine */
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -60%;
+    width: 40%;
+    height: 140%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.06), rgba(255,255,255,0.20), rgba(255,255,255,0.06));
+    transform: skewX(-20deg);
+    animation: btnShine 3.5s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes btnShine {
+    0% { left: -60%; opacity: 0; }
+    10% { opacity: 1; }
+    50% { left: 130%; opacity: 1; }
+    90% { opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+}
 
 .btn-primary:hover {
     background: linear-gradient(90deg, var(--primary-dark), var(--secondary-color));
@@ -700,4 +725,40 @@ html {
         opacity: 1;
         transform: translateY(0);
     }
+}
+.hire-me {
+    position: fixed;
+    right: 2.25rem;
+    bottom: 6.5rem;
+    z-index: 1100;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: 0.6rem 1rem;
+    background: linear-gradient(90deg, var(--secondary-color), rgba(203,161,53,0.9));
+    color: #071229;
+    font-weight: 700;
+    border-radius: 999px;
+    box-shadow: 0 18px 40px rgba(11,35,70,0.18);
+    cursor: pointer;
+    text-decoration: none;
+    transform: translate3d(0,0,0);
+    animation: flyAround 12s linear infinite;
+}
+.hire-me:focus,
+.hire-me:hover {
+    animation-play-state: paused;
+    transform: scale(1.05);
+}
+
+@keyframes flyAround {
+    0%   { transform: translate(0, 0); }
+    10%  { transform: translate(-8vw, -6vh) rotate(-6deg); }
+    25%  { transform: translate(12vw, -10vh) rotate(6deg); }
+    40%  { transform: translate(-15vw, 6vh) rotate(-8deg); }
+    55%  { transform: translate(10vw, 12vh) rotate(8deg); }
+    70%  { transform: translate(-6vw, -4vh) rotate(-4deg); }
+    85%  { transform: translate(6vw, -8vh) rotate(4deg); }
+    100% { transform: translate(0, 0); }
 }
