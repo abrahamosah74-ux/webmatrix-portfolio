@@ -12,9 +12,9 @@
         "images": [
             "images/car-dealership.png",
             "images/small-project.png",
-            "images/screenshot images/car-1.jpg",
-            "images/screenshot images/car-2.jpg",
-            "images/screenshot images/car-3.jpg"
+            "images/screenshot-images/car-1.jpg",
+            "images/screenshot-images/car-2.jpg",
+            "images/screenshot-images/car-3.jpg"
         ],
         "link": "https://car-dealership-navy.vercel.app/",
         "theme": "navy"
