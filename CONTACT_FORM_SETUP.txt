@@ -1,0 +1,59 @@
+QUICK SETUP - Contact Form Email Integration
+================================================
+
+To receive emails from your contact form, follow these steps:
+
+STEP 1: Create Formspree Account
+---------------------------------
+1. Go to https://formspree.io
+2. Click "Get Started" and sign up with your email
+3. Verify your email address
+
+STEP 2: Create New Form
+------------------------
+1. In Formspree dashboard, click "New Form"
+2. Name it: "WebMatrix Contact Form"
+3. Select the email where you want to receive messages
+4. COPY your Form ID (it looks like: f_abc123xyz)
+
+STEP 3: Update index.html
+--------------------------
+1. Open index.html in a text editor
+2. Find this line (around line 154):
+   <form id="contact-form" class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+
+3. Replace "your-form-id" with your actual Form ID from Step 2
+4. Save the file
+
+EXAMPLE:
+--------
+If your Form ID is: f_k9x2m8p5
+Change the action to:
+action="https://formspree.io/f_k9x2m8p5"
+
+STEP 4: Test It
+---------------
+1. Open http://localhost:8000 in your browser
+2. Fill out the contact form
+3. Click "Send Message"
+4. Check your email inbox (and spam folder)
+
+WHAT HAPPENS:
+--------------
+✓ Client fills form
+✓ Client clicks "Send Message"
+✓ Message is sent to Formspree
+✓ Formspree forwards it to your email
+✓ Client sees success message
+
+FALLBACK:
+---------
+If you don't have Formspree set up yet, the form will open their email client
+as a fallback (mailto).
+
+FREE TIER:
+----------
+- 50 submissions per month (perfect for a portfolio)
+- Unlimited for $10/month if needed
+
+Need help? See FORMSPREE_SETUP.md for detailed instructions.

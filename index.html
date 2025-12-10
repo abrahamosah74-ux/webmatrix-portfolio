@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WebMatrix — Professional Full Stack Web Developer. Building scalable, beautiful web solutions for businesses.">
+    <meta name="keywords" content="Web Developer, Full Stack, HTML, CSS, JavaScript, Python, Web Design">
+    <meta property="og:title" content="WebMatrix - Full Stack Web Developer">
+    <meta property="og:description" content="Professional web development services. Specializing in responsive design and interactive web applications.">
+    <meta property="og:type" content="website">
+    <title>WebMatrix | Full Stack Web Developer | Professional Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <h1>WebMatrix</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#projects">Portfolio</a></li>
+                <li><a href="#skills">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Build Your Digital Presence</h1>
+                <p class="hero-subtitle">I create stunning, responsive websites that drive results. From concept to deployment, let's bring your vision to life.</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                    <a href="#projects" class="btn btn-secondary">View Work</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual-container">
+            <img class="hero-visual" src="images/device-mockup.svg" alt="Web design on device mockup">
+        </div>
+        <div class="hero-background">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p>Real solutions for real businesses. Here's what I've built:</p>
+            </div>
+            <div id="projects-container" class="projects-grid">
+                <!-- Projects loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Services/Skills Section -->
+    <section id="skills" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>What I Offer</h2>
+                <p>Full-stack web development services tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Responsive Design</h3>
+                    <p>Beautiful, mobile-first interfaces that work on any device. Every pixel counted.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Fast Performance</h3>
+                    <p>Optimized code and assets for lightning-fast load times. Speed matters.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Secure & Reliable</h3>
+                    <p>Built with security best practices. Your data is protected.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>SEO Optimized</h3>
+                    <p>Clean, semantic code that ranks well. Visibility matters.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Interactive Features</h3>
+                    <p>Smooth animations and engaging user interactions. Keep visitors engaged.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛠️</div>
+                    <h3>Full Stack</h3>
+                    <p>Frontend to backend. HTML, CSS, JavaScript, Python. I handle it all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>I'm a passionate full-stack web developer dedicated to creating exceptional digital experiences. With expertise in modern web technologies, I transform ideas into high-performing web applications.</p>
+                    <p>Whether you're a startup looking to establish an online presence or an established business wanting to enhance your digital footprint, I'm here to help.</p>
+                    <div class="skills-badges">
+                        <span class="badge">HTML5</span>
+                        <span class="badge">CSS3</span>
+                        <span class="badge">JavaScript</span>
+                        <span class="badge">Python</span>
+                        <span class="badge">Responsive Design</span>
+                        <span class="badge">Web Performance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">            background: linear-gradient(135deg, #f8fafc 0%, #e8eef7 50%, #dce4f5 100%);            background: linear-gradient(135deg, rgba(248,250,252,0.85) 0%, rgba(232,238,247,0.85) 100%), url('images/hero-backgrounds/hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+                <h2>Let's Work Together</h2>
+                <p>Ready to start your project? Get in touch today.</p>
+            </div>
+            <div class="contact-content">
+                <form id="contact-form" class="contact-form" action="https://formspree.io/f/mjknelyb" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required aria-label="Your name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required aria-label="Your email">
+                    </div>
+                    <div class="form-group">
+                        <select name="service" required aria-label="Service type">
+                            <option value="">Select a service...</option>
+                            <option value="website">Website Development</option>
+                            <option value="redesign">Website Redesign</option>
+                            <option value="feature">New Feature</option>
+                            <option value="performance">Performance Optimization</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="5" placeholder="Tell me about your project..." required aria-label="Your message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Direct Contact</h3>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>11</a></p>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter">Twitter</a>
+                    </div> href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>
+                </div>  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>
+            </div>      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter">Twitter</a>
+        </div>      </div>
+    </section>  </div>
+            </div>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to bring your ideas to life?</h2>
+            <p>Let's create something amazing together</p>
+            <a href="#contact" class="btn btn-primary">Start Your Project</a>
+        </div>2>Ready to bring your ideas to life?</h2>
+    </section>>Let's create something amazing together</p>
+            <a href="#contact" class="btn btn-primary">Start Your Project</a>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="year"></span> WebMatrix. All rights reserved. | Built with passion for web excellence.</p>
+        </div>ass="footer">
+    </footer>class="container">
+            <p>&copy; <span id="year"></span> WebMatrix. All rights reserved. | Built with passion for web excellence.</p>
+    <!-- Floating Action Button -->
+    <a href="https://wa.me/18458662611" target="_blank" rel="noopener noreferrer" class="floating-btn" title="Contact via WhatsApp">
+        💬 Chat
+    </a> Floating Action Button -->
+    <a href="https://wa.me/18458662611" target="_blank" rel="noopener noreferrer" class="floating-btn" title="Contact via WhatsApp">
+    <script src="script.js"></script>
+</body>>
+</html>
+    <script src="script.js"></script>
+</body>
+</html>

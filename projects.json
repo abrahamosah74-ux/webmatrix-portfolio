@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Interactive Web Application",
+        "description": "A modern, feature-rich web application showcasing best practices in responsive design and user interaction. Includes smooth animations, optimized performance, and accessibility compliance. Perfect example of interactive UI design with vanilla JavaScript. Achieves 95+ Lighthouse score.",
+        "image": "images/small-project.png",
+        "link": "https://example-web-app.netlify.app"
+    },
+    {
+        "title": "Car Dealership — Navy Theme",
+        "description": "A modern car-dealership demo site with inventory listings, search filters, and a responsive UI. Built as a showcase project demonstrating responsive layouts, accessible forms, and performance optimizations.",
+        "image": "images/car-dealership.png",
+        "link": "https://car-dealership-navy.vercel.app/"
+    }
+]
