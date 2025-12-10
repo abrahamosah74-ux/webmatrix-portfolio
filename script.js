@@ -122,16 +122,17 @@ function renderProjects(projects) {
                 });
             });
             // Clicking main image opens lightbox viewer
-            if (main) {
-                main.style.cursor = 'zoom-in';
-                main.addEventListener('click', () => {
-                    const imgs = project.images.slice();
-                    // determine current index (match by filename)
-                    let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
-                    if (startIndex === -1) startIndex = 0;
-                    openLightbox(imgs, startIndex, project.title || 'Project');
-                });
-            }
+                if (main) {
+                    main.style.cursor = 'zoom-in';
+                    main.addEventListener('click', () => {
+                        const imgs = project.images.slice();
+                        // determine current index (match by filename)
+                        let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
+                        if (startIndex === -1) startIndex = 0;
+                        // pass title, link and description for richer caption
+                        openLightbox(imgs, startIndex, project.title || 'Project', project.link || '', project.description || '');
+                    });
+                }
         }
 
         // Staggered animation
@@ -225,12 +226,14 @@ function createLightboxIfNeeded() {
     });
 }
 
-let _lightboxState = { images: [], index: 0, title: '' };
-function openLightbox(images, startIndex = 0, title = '') {
+let _lightboxState = { images: [], index: 0, title: '', link: '', description: '' };
+function openLightbox(images, startIndex = 0, title = '', link = '', description = '') {
     createLightboxIfNeeded();
     _lightboxState.images = images.slice();
     _lightboxState.index = Math.max(0, Math.min(startIndex, images.length - 1));
     _lightboxState.title = title || '';
+    _lightboxState.link = link || '';
+    _lightboxState.description = description || '';
     const overlay = document.querySelector('.lightbox-overlay');
     const imgEl = overlay.querySelector('.lightbox-img');
     const loader = overlay.querySelector('.lightbox-loader');
@@ -251,7 +254,14 @@ function openLightbox(images, startIndex = 0, title = '') {
     tmp.onload = () => {
         imgEl.src = target;
         imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
-        caption.textContent = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        // richer caption: title + index + optional link and short description
+        const titleText = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        let linkHTML = '';
+        if (_lightboxState.link) {
+            linkHTML = `<div class="lightbox-link"><a href="${_lightboxState.link}" target="_blank" rel="noopener noreferrer">View Project</a></div>`;
+        }
+        const desc = _lightboxState.description ? `<div class="lightbox-desc">${_lightboxState.description}</div>` : '';
+        caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
         // reset zoom container
@@ -291,7 +301,13 @@ function navigateLightbox(dir) {
     tmp.onload = () => {
         imgEl.src = target;
         imgEl.alt = _lightboxState.images[_lightboxState.index] || '';
-        caption.textContent = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        const titleText = `${_lightboxState.title} — ${_lightboxState.index + 1} of ${_lightboxState.images.length}`;
+        let linkHTML = '';
+        if (_lightboxState.link) {
+            linkHTML = `<div class="lightbox-link"><a href="${_lightboxState.link}" target="_blank" rel="noopener noreferrer">View Project</a></div>`;
+        }
+        const desc = _lightboxState.description ? `<div class="lightbox-desc">${_lightboxState.description}</div>` : '';
+        caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
         const zoomContainer = overlay.querySelector('.lightbox-zoom'); if (zoomContainer) zoomContainer.style.transform = 'scale(1)';
@@ -421,3 +437,14 @@ formInputs.forEach(input => {
         this.style.borderColor = 'var(--primary-color)';
     });
 });
+
+// Small helper to escape HTML used in captions
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
