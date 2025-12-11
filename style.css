@@ -541,15 +541,17 @@ html {
 
 .lightbox-caption .lightbox-title {
     font-weight: 800;
-    font-size: 1.05rem;
-    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.3px;
 }
 
 .lightbox-caption .lightbox-desc {
-    margin-top: 0.35rem;
-    color: rgba(243,244,246,0.9);
-    font-size: 0.95rem;
-    max-height: 3.2rem;
+    margin-top: 0.5rem;
+    color: rgba(243,244,246,0.85);
+    font-size: 0.93rem;
+    line-height: 1.4;
+    max-height: 2.8rem;
     overflow: hidden;
     text-overflow: ellipsis;
 }

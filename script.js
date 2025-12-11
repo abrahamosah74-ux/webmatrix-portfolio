@@ -188,9 +188,11 @@ function createLightboxIfNeeded() {
         if (e.touches.length === 1) {
             touchState.startX = e.touches[0].clientX;
             touchState.startY = e.touches[0].clientY;
+            console.log('[Lightbox] Swipe start:', touchState.startX, touchState.startY);
         } else if (e.touches.length === 2) {
             touchState.startDist = getDistance(e.touches);
             touchState.lastZoom = touchState.zoom || 1;
+            console.log('[Lightbox] Pinch start: distance', touchState.startDist.toFixed(2), 'zoom', touchState.lastZoom);
         }
     }, { passive: true });
 
@@ -200,9 +202,10 @@ function createLightboxIfNeeded() {
             e.preventDefault();
             const dist = getDistance(e.touches);
             let newZoom = (dist / touchState.startDist) * touchState.lastZoom;
-            newZoom = Math.max(1, Math.min(newZoom, 4));
+            newZoom = Math.max(1, Math.min(newZoom, 3.5));
             touchState.zoom = newZoom;
             zoomContainer.style.transform = `scale(${newZoom})`;
+            console.log('[Lightbox] Pinch: zoom', newZoom.toFixed(2));
         }
     }, { passive: false });
 
@@ -212,7 +215,10 @@ function createLightboxIfNeeded() {
             if (e.changedTouches && e.changedTouches.length === 1) {
                 const dx = e.changedTouches[0].clientX - touchState.startX;
                 const dy = e.changedTouches[0].clientY - touchState.startY;
-                if (Math.abs(dx) > 50 && Math.abs(dy) < 100) {
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                console.log('[Lightbox] Swipe end: dx=' + dx + ', dy=' + dy + ', dist=' + dist.toFixed(0));
+                if (Math.abs(dx) > 40 && Math.abs(dy) < 80) {
+                    console.log('[Lightbox] Swipe detected, direction: ' + (dx < 0 ? 'right' : 'left'));
                     if (dx < 0) navigateLightbox(1); else navigateLightbox(-1);
                 }
             }
