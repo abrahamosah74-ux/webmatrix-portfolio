@@ -20,5 +20,21 @@
         ],
         "link": "https://car-dealership-navy.vercel.app/",
         "theme": "navy"
+    },
+    {
+        "title": "Project Upload Area",
+        "description": "Upload your project images here. Click the upload button to add screenshots for your portfolio project.",
+        "caption": "Click to upload project images",
+        "image": "images/placeholder-project-1.jpg",
+        "isUploadable": true,
+        "uploadId": "project1"
+    },
+    {
+        "title": "Project Upload Area",
+        "description": "Upload your project images here. Click the upload button to add screenshots for your portfolio project.",
+        "caption": "Click to upload project images",
+        "image": "images/placeholder-project-2.jpg",
+        "isUploadable": true,
+        "uploadId": "project2"
     }
 ]

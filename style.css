@@ -319,7 +319,7 @@ html {
 .projects-grid {
     display: grid;
     gap: 2.5rem;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
 .project {
@@ -333,6 +333,7 @@ html {
     display: flex;
     flex-direction: column;
     height: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .project:hover {
@@ -383,7 +384,7 @@ html {
 
 .project img {
     width: 100%;
-    height: 350px;
+    height: 45%;
     object-fit: cover;
 }
 
@@ -424,6 +425,57 @@ html {
     color: #0d1f2d;
 }
 
+/* Upload project cards */
+.project-upload-area {
+    position: relative;
+    width: 100%;
+    height: 45%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f1e8, #ebe7de);
+}
+
+.project-upload-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-upload-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 31, 45, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.project:hover .project-upload-overlay {
+    opacity: 1;
+}
+
+.project-upload-btn {
+    background: #d4af37;
+    color: #0d1f2d;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.project-upload-btn:hover {
+    background: #ffc107;
+    transform: scale(1.05);
+}
+
 /* Gallery for project screenshots */
 .project-gallery {
     display: block;
@@ -432,10 +484,11 @@ html {
 
 .project-gallery .project-main {
     width: 100%;
-    height: 380px;
+    height: 100%;
+    max-height: 55%;
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .project-thumbs {
