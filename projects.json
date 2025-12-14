@@ -26,13 +26,13 @@
         "description": "Add your third project link here. This is a placeholder for your next portfolio addition.",
         "caption": "Click to view project",
         "image": "images/placeholder-project-1.jpg",
-        "link": "#"
+        "link": "https://future-plumbling.vercel.app/"
     },
     {
         "title": "Your Project Here",
         "description": "Add your fourth project link here. This is a placeholder for your next portfolio addition.",
         "caption": "Click to view project",
         "image": "images/placeholder-project-2.jpg",
-        "link": "#"
+        "link": "https://naadom-preview.vercel.app/"
     }
 ]
