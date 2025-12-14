@@ -22,19 +22,17 @@
         "theme": "navy"
     },
     {
-        "title": "Project Upload Area",
-        "description": "Upload your project images here. Click the upload button to add screenshots for your portfolio project.",
-        "caption": "Click to upload project images",
+        "title": "Your Project Here",
+        "description": "Add your third project link here. This is a placeholder for your next portfolio addition.",
+        "caption": "Click to view project",
         "image": "images/placeholder-project-1.jpg",
-        "isUploadable": true,
-        "uploadId": "project1"
+        "link": "#"
     },
     {
-        "title": "Project Upload Area",
-        "description": "Upload your project images here. Click the upload button to add screenshots for your portfolio project.",
-        "caption": "Click to upload project images",
+        "title": "Your Project Here",
+        "description": "Add your fourth project link here. This is a placeholder for your next portfolio addition.",
+        "caption": "Click to view project",
         "image": "images/placeholder-project-2.jpg",
-        "isUploadable": true,
-        "uploadId": "project2"
+        "link": "#"
     }
 ]

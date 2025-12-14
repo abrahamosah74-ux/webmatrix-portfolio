@@ -62,142 +62,77 @@ function renderProjects(projects) {
         const projectDiv = document.createElement('div');
         projectDiv.classList.add('project');
 
-        // Check if this is an uploadable project card
-        if (project.isUploadable) {
-            // Create upload card
-            const uploadId = project.uploadId || `project${index}`;
-            const savedImage = localStorage.getItem(`project_${uploadId}_image`);
-            const imageSrc = savedImage || project.image || 'images/car-dealership.png';
-            
-            projectDiv.innerHTML = `
-                <div class="project-upload-area">
-                    <img src="${imageSrc}" alt="${project.title}" loading="lazy" class="project-upload-preview">
-                    <div class="project-upload-overlay">
-                        <button class="project-upload-btn" data-upload-id="${uploadId}">📷 Upload Image</button>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>${project.title}</h3>
-                    <p>${project.description}</p>
+        // Build gallery HTML if project.images (array) exists, otherwise single image
+        let mediaHTML = '';
+        if (Array.isArray(project.images) && project.images.length) {
+            const thumbs = project.images.map((img, i) => `
+                    <img class="thumb" src="${img}" alt="${project.title} screenshot ${i+1}" loading="lazy" data-src="${img}">
+                `).join('');
+
+            mediaHTML = `
+                <div class="project-gallery">
+                    <img class="project-main" src="${project.images[0]}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">
+                    <div class="project-thumbs">${thumbs}</div>
                 </div>
             `;
-            
-            container.appendChild(projectDiv);
-            
-            // Add upload handler
-            const uploadBtn = projectDiv.querySelector('.project-upload-btn');
-            if (uploadBtn) {
-                uploadBtn.addEventListener('click', () => {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.accept = 'image/*';
-                    input.addEventListener('change', (e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
-                        
-                        if (!file.type.startsWith('image/')) {
-                            alert('Please select a valid image file');
-                            return;
-                        }
-                        
-                        if (file.size > 5 * 1024 * 1024) {
-                            alert('Image size should be less than 5MB');
-                            return;
-                        }
-                        
-                        const reader = new FileReader();
-                        reader.onload = (evt) => {
-                            const dataUrl = evt.target?.result;
-                            if (typeof dataUrl === 'string') {
-                                const previewImg = projectDiv.querySelector('.project-upload-preview');
-                                previewImg.src = dataUrl;
-                                try {
-                                    localStorage.setItem(`project_${uploadId}_image`, dataUrl);
-                                    console.log(`[Project] ${uploadId} image saved`);
-                                } catch (err) {
-                                    console.warn('[Project] Failed to save to localStorage:', err);
-                                }
-                            }
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                    input.click();
-                });
-            }
         } else {
-            // Regular project card
-            // Build gallery HTML if project.images (array) exists, otherwise single image
-            let mediaHTML = '';
-            if (Array.isArray(project.images) && project.images.length) {
-                const thumbs = project.images.map((img, i) => `
-                        <img class="thumb" src="${img}" alt="${project.title} screenshot ${i+1}" loading="lazy" data-src="${img}">
-                    `).join('');
+            const src = project.image || 'images/car-dealership.png';
+            mediaHTML = `<img src="${src}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">`;
+        }
 
-                mediaHTML = `
-                    <div class="project-gallery">
-                        <img class="project-main" src="${project.images[0]}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">
-                        <div class="project-thumbs">${thumbs}</div>
-                    </div>
-                `;
-            } else {
-                const src = project.image || 'images/car-dealership.png';
-                mediaHTML = `<img src="${src}" alt="${project.title}" loading="lazy" onerror="this.src='images/car-dealership.png'">`;
-            }
+        projectDiv.innerHTML = `
+            ${mediaHTML}
+            <div class="project-info">
+                <h3>${project.title}</h3>
+                ${project.theme ? `<span class="project-theme">${project.theme}</span>` : ''}
+                <p>${project.description}</p>
+                <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Project</a>
+            </div>
+        `;
 
-            projectDiv.innerHTML = `
-                ${mediaHTML}
-                <div class="project-info">
-                    <h3>${project.title}</h3>
-                    ${project.theme ? `<span class="project-theme">${project.theme}</span>` : ''}
-                    <p>${project.description}</p>
-                    <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Live Project</a>
-                </div>
-            `;
+        container.appendChild(projectDiv);
 
-            container.appendChild(projectDiv);
+        // Apply theme styling if theme property exists
+        if (project.theme === 'navy') {
+            projectDiv.classList.add('project-navy');
+        }
 
-            // Apply theme styling if theme property exists
-            if (project.theme === 'navy') {
-                projectDiv.classList.add('project-navy');
-            }
+        // Accessibility: mark as article and make keyboard-focusable
+        projectDiv.setAttribute('role', 'article');
+        projectDiv.tabIndex = 0;
 
-            // Accessibility: mark as article and make keyboard-focusable
-            projectDiv.setAttribute('role', 'article');
-            projectDiv.tabIndex = 0;
-
-            // Keyboard navigation for projects
-            const projectLink = projectDiv.querySelector('a');
-            projectDiv.addEventListener('keydown', (ev) => {
-                if (ev.key === 'Enter' || ev.key === ' ') {
-                    ev.preventDefault();
-                    if (projectLink && projectLink.href) {
-                        window.open(projectLink.href, '_blank', 'noopener');
-                    }
+        // Keyboard navigation for projects
+        const projectLink = projectDiv.querySelector('a');
+        projectDiv.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                if (projectLink && projectLink.href && projectLink.href !== '#') {
+                    window.open(projectLink.href, '_blank', 'noopener');
                 }
-            });
-
-            // Thumbnail click behavior (swap main image)
-            if (Array.isArray(project.images) && project.images.length) {
-                const main = projectDiv.querySelector('.project-main');
-                const thumbs = projectDiv.querySelectorAll('.project-thumbs .thumb');
-                thumbs.forEach(t => {
-                    t.addEventListener('click', () => {
-                        if (main && t.dataset && t.dataset.src) main.src = t.dataset.src;
-                    });
-                });
-                // Clicking main image opens lightbox viewer
-                    if (main) {
-                        main.style.cursor = 'zoom-in';
-                        main.addEventListener('click', () => {
-                            const imgs = project.images.slice();
-                            // determine current index (match by filename)
-                            let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
-                            if (startIndex === -1) startIndex = 0;
-                                    // pass title, link, description and short caption for richer caption
-                                    openLightbox(imgs, startIndex, project.title || 'Project', project.link || '', project.description || '', project.caption || '');
-                        });
-                    }
             }
+        });
+
+        // Thumbnail click behavior (swap main image)
+        if (Array.isArray(project.images) && project.images.length) {
+            const main = projectDiv.querySelector('.project-main');
+            const thumbs = projectDiv.querySelectorAll('.project-thumbs .thumb');
+            thumbs.forEach(t => {
+                t.addEventListener('click', () => {
+                    if (main && t.dataset && t.dataset.src) main.src = t.dataset.src;
+                });
+            });
+            // Clicking main image opens lightbox viewer
+                if (main) {
+                    main.style.cursor = 'zoom-in';
+                    main.addEventListener('click', () => {
+                        const imgs = project.images.slice();
+                        // determine current index (match by filename)
+                        let startIndex = imgs.findIndex(u => u === main.src || u === main.getAttribute('src'));
+                        if (startIndex === -1) startIndex = 0;
+                                // pass title, link, description and short caption for richer caption
+                                openLightbox(imgs, startIndex, project.title || 'Project', project.link || '', project.description || '', project.caption || '');
+                    });
+                }
         }
 
         // Staggered animation
