@@ -1,4 +1,7 @@
 {
   "buildCommand": "",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "env": {
+    "VERCEL_ENV": "production"
+  }
 }
