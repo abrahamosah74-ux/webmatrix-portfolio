@@ -233,7 +233,7 @@ function createLightboxIfNeeded() {
 }
 
 let _lightboxState = { images: [], index: 0, title: '', link: '', description: '', caption: '' };
-function openLightbox(images, startIndex = 0, title = '', link = '', description = '', caption = '') {
+function openLightbox(images, startIndex = 0, title = '', link = '', description = '', captionText = '') {
     createLightboxIfNeeded();
     _lightboxState.images = images.slice();
     _lightboxState.index = Math.max(0, Math.min(startIndex, images.length - 1));
@@ -241,11 +241,11 @@ function openLightbox(images, startIndex = 0, title = '', link = '', description
     _lightboxState.link = link || '';
     _lightboxState.description = description || '';
     // allow a short caption to be preferred (projects.json can include `caption`)
-    _lightboxState.caption = caption || '';
+    _lightboxState.caption = captionText || '';
     const overlay = document.querySelector('.lightbox-overlay');
     const imgEl = overlay.querySelector('.lightbox-img');
     const loader = overlay.querySelector('.lightbox-loader');
-    const caption = overlay.querySelector('.lightbox-caption');
+    const captionEl = overlay.querySelector('.lightbox-caption');
 
     // Show loader while high-res loads
     loader.style.display = 'block';
@@ -271,7 +271,7 @@ function openLightbox(images, startIndex = 0, title = '', link = '', description
         // use provided short caption if available, otherwise use truncated description
         const chosen = _lightboxState.caption || (_lightboxState.description ? truncate(_lightboxState.description, 160) : '');
         const desc = chosen ? `<div class="lightbox-desc">${escapeHtml(chosen)}</div>` : '';
-        caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
+        captionEl.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
         // reset zoom container
@@ -301,7 +301,7 @@ function navigateLightbox(dir) {
     if (!overlay) return;
     const imgEl = overlay.querySelector('.lightbox-img');
     const loader = overlay.querySelector('.lightbox-loader');
-    const caption = overlay.querySelector('.lightbox-caption');
+    const captionEl = overlay.querySelector('.lightbox-caption');
     // show loader while switching
     loader.style.display = 'block';
     imgEl.style.opacity = '0';
@@ -318,7 +318,7 @@ function navigateLightbox(dir) {
         }
         const chosen = _lightboxState.caption || (_lightboxState.description ? truncate(_lightboxState.description, 160) : '');
         const desc = chosen ? `<div class="lightbox-desc">${escapeHtml(chosen)}</div>` : '';
-        caption.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
+        captionEl.innerHTML = `<div class="lightbox-title">${escapeHtml(titleText)}</div>${desc}${linkHTML}`;
         loader.style.display = 'none';
         imgEl.style.opacity = '1';
         const zoomContainer = overlay.querySelector('.lightbox-zoom'); if (zoomContainer) zoomContainer.style.transform = 'scale(1)';
