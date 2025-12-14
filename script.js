@@ -467,11 +467,27 @@ function truncate(str, maxLen) {
     return str.slice(0, maxLen - 1).trim() + '…';
 }
 
-// Profile picture upload handler
-const profilePicInput = document.getElementById('profile-pic-input');
-const profilePictureImg = document.getElementById('profile-picture');
+// Profile picture upload handler - wrap in DOMContentLoaded to ensure element exists
+function initProfilePictureHandler() {
+    const profilePicInput = document.getElementById('profile-pic-input');
+    const profilePictureImg = document.getElementById('profile-picture');
 
-if (profilePicInput && profilePictureImg) {
+    if (!profilePicInput || !profilePictureImg) {
+        console.warn('[Profile] Required elements not found');
+        return;
+    }
+
+    // Load profile picture from localStorage on init
+    try {
+        const savedPic = localStorage.getItem('profilePicture');
+        if (savedPic) {
+            profilePictureImg.src = savedPic;
+            console.log('[Profile] Picture loaded from localStorage');
+        }
+    } catch (err) {
+        console.warn('[Profile] Failed to load from localStorage:', err);
+    }
+
     profilePicInput.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -497,7 +513,7 @@ if (profilePicInput && profilePictureImg) {
                 // Save to localStorage for persistence
                 try {
                     localStorage.setItem('profilePicture', dataUrl);
-                    console.log('[Profile] Picture uploaded and saved');
+                    console.log('[Profile] Picture uploaded and saved to localStorage');
                 } catch (err) {
                     console.warn('[Profile] Failed to save to localStorage:', err);
                 }
@@ -509,19 +525,15 @@ if (profilePicInput && profilePictureImg) {
         reader.readAsDataURL(file);
     });
 
-    // Load profile picture from localStorage on page load
-    try {
-        const savedPic = localStorage.getItem('profilePicture');
-        if (savedPic) {
-            profilePictureImg.src = savedPic;
-            console.log('[Profile] Picture loaded from localStorage');
-        }
-    } catch (err) {
-        console.warn('[Profile] Failed to load from localStorage:', err);
-    }
-
     // Click on image to trigger file input
     profilePictureImg.addEventListener('click', () => {
         profilePicInput.click();
     });
+}
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProfilePictureHandler);
+} else {
+    initProfilePictureHandler();
 }
