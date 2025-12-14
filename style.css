@@ -1063,7 +1063,47 @@ html {
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .project {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 400px;
+    }
+}
+
 @media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .project {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 450px;
+    }
+
+    .project img {
+        height: 280px;
+    }
+
+    .project-info {
+        padding: 1.8rem;
+    }
+
+    .project-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .project-info p {
+        font-size: 0.95rem;
+    }
+
     .hire-me {
         display: none;
     }
@@ -1091,20 +1131,6 @@ html {
         font-size: 1.8rem;
     }
 
-    .project {
-        flex-direction: column;
-    }
-
-    .project img {
-        width: 100%;
-        height: 250px;
-        border-radius: 15px 15px 0 0;
-    }
-
-    .project-info {
-        padding: 1.5rem;
-    }
-
     .contact-content {
         grid-template-columns: 1fr;
     }
@@ -1119,11 +1145,50 @@ html {
         bottom: 1rem;
         right: 1rem;
     }
+
+    .project-info a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
         width: 95%;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project {
+        aspect-ratio: auto;
+        height: auto;
+        min-height: 400px;
+    }
+
+    .project img {
+        height: 220px;
+    }
+
+    .project-info {
+        padding: 1.2rem;
+    }
+
+    .project-info h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .project-info p {
+        font-size: 0.85rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .project-info a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
     }
 
     .nav-links {
@@ -1132,7 +1197,11 @@ html {
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .hero {
+        min-height: 70vh;
     }
 
     .btn {
@@ -1145,7 +1214,33 @@ html {
     .contact-form select {
         padding: 0.6rem 0.8rem;
     }
-}
+
+    .section-header h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+    }
+
+    .service-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .floating-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        bottom: 0.8rem;
+        right: 0.8rem;
+    }
+}}
 
 /* ============================================
    ANIMATIONS
