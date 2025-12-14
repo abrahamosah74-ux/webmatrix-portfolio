@@ -466,3 +466,62 @@ function truncate(str, maxLen) {
     if (str.length <= maxLen) return str;
     return str.slice(0, maxLen - 1).trim() + '…';
 }
+
+// Profile picture upload handler
+const profilePicInput = document.getElementById('profile-pic-input');
+const profilePictureImg = document.getElementById('profile-picture');
+
+if (profilePicInput && profilePictureImg) {
+    profilePicInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please select a valid image file');
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image size should be less than 5MB');
+            return;
+        }
+
+        // Read and preview image
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const dataUrl = evt.target?.result;
+            if (typeof dataUrl === 'string') {
+                profilePictureImg.src = dataUrl;
+                // Save to localStorage for persistence
+                try {
+                    localStorage.setItem('profilePicture', dataUrl);
+                    console.log('[Profile] Picture uploaded and saved');
+                } catch (err) {
+                    console.warn('[Profile] Failed to save to localStorage:', err);
+                }
+            }
+        };
+        reader.onerror = () => {
+            alert('Error reading file');
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Load profile picture from localStorage on page load
+    try {
+        const savedPic = localStorage.getItem('profilePicture');
+        if (savedPic) {
+            profilePictureImg.src = savedPic;
+            console.log('[Profile] Picture loaded from localStorage');
+        }
+    } catch (err) {
+        console.warn('[Profile] Failed to load from localStorage:', err);
+    }
+
+    // Click on image to trigger file input
+    profilePictureImg.addEventListener('click', () => {
+        profilePicInput.click();
+    });
+}
